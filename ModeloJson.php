@@ -21,10 +21,12 @@ class Datos extends Conexion
 		$password = "4321";
 		$role = "Administrador";
 		$mail = "gcardoso@gmail.com";
+		
 		$stmt->bindParam(":usuario", $usuario,PDO::PARAM_STR);
 		$stmt->bindParam(":password", $password,PDO::PARAM_STR);
 		$stmt->bindParam(":role", $role,PDO::PARAM_STR);
 		$stmt->bindParam(":mail", $mail,PDO::PARAM_STR);
+		
 		if($stmt->execute()){
 				echo "registro exitoso";
 		}else{
@@ -55,6 +57,7 @@ class Datos extends Conexion
 			//probamos el funcionamiento 
 			//creamos una talba 
 
+			//Primer echo 
 			echo '
 			<table>
 			<tr>
@@ -66,6 +69,7 @@ class Datos extends Conexion
 			 ';
 
 
+			 //Nuestro while es el encargado de mostrar los campos de los usuarios
 
 		while($fila = $stmt->fetch(PDO::FETCH_BOUND)){
 
@@ -84,6 +88,7 @@ class Datos extends Conexion
 
 			array_push($usuarios, $user);
 
+			//Segundo echo 
 			echo '
 			<tr>
 			<td>'.$user['id'].'</td>	
@@ -93,24 +98,109 @@ class Datos extends Conexion
 			<td>'.$user['mail'].'</td>	
 			';
 
-
 		}
 
 
 			echo '</table>';
 
-
 					//retornamos nuestro array principal usuarios
 			return $usuarios;
 
-
-
-
 	}
 
-}
+
+	public function loginUsuariosModel($tabla){
+
+
+		//en la setencia sql solo traemos al usuario selecionado
+		$stmt = Conexion::conectar()->prepare ("SELECT id, usuario, password, role, mail FROM  $tabla WHERE mail = :mail AND password = :password"); 
+
+		//probamos con las variables auxiliares
+		$mail = "aritza@cursos.com";
+		$password = "1234";
+
+
+
+
+		//llamamos al objeto bindParam y le pasamos el correo y el password como en el create
+		$stmt->bindParam(":mail", $mail);
+		$stmt->bindParam(":password", $password);
+
+		//parachecar que todo salga bien 
+		$stmt->execute();
+
+		//para guardar los parametros completos del usuario con el que nos logueamos
+		$stmt->bindColumn("id",$id);
+		$stmt->bindColumn("usuario",$usuario);
+		$stmt->bindColumn("password",$password);
+		$stmt->bindColumn("role",$role);
+		$stmt->bindColumn("mail",$mail);
+
+		//Primer echo 
+		//verificar
+		echo'
+		<table>
+		<tr>
+		<td><strong>id</strong></td>
+		<td><strong>usuarios</strong></td>
+		<td><strong>password</strong></td>
+		<td><strong>role</strong></td>
+		<td><strong>mail</strong></td>
+		';
+			
+
+
+
+		//el while se encarga de mostrar los campos del usuario en pantalla
+		while($fila = $stmt->fetch(PDO::FETCH_BOUND)){
+
+			$user = array();
+			//le vamos pasando los atributos en codigficacion UTF8 por si tenemops algun caracter que no se encuentre en ingles como la ñ
+			//cada atributo es una posicion en el array user
+			$user["id"] = utf8_decode($id);
+			$user["usuario"] = utf8_decode($usuario);
+			$user["password"] = utf8_decode($password);
+			$user["role"] = utf8_decode($role);
+			$user["mail"] = utf8_decode($mail);
+
+			//Para enviar las informacion 
+			//guardamos el array users 
+			//y acceder a ellos con estos arrays
+
+
+			//Segundo echo 
+			echo '
+			<tr>
+			<td>'.$user['id'].'</td>	
+			<td>'.$user['usuario'].'</td>	
+			<td>'.$user['password'].'</td>	
+			<td>'.$user['role'].'</td>	
+			<td>'.$user['mail'].'</td>	
+			';
+
+		}
+
+		//validacion de la variable user si es diferente a vacio nos regresa el valor de la variable si no nos muestra un falso
+		if(!empty($user)){
+			return $user;
+		}else{
+			return false;
+
+			}	
+
+
+		}
+	
+	}
+
+
+
+
+
 //mandamos a llamar un nuevo objeto de la clase Datos que hereda de conexion 
 $obj = new Datos();
 //pasamos el parametro de la tabla usuario para la funcion crear usuario que gracias al prepare nos deja insertar el codigo sql 
-$obj->readUsuariosModel("usuarios");
+//cuanto estanciones nuestro objeto y le pasamos cada funcion para comprobar su funcionamiento 
+
+$obj->loginUsuariosModel("usuarios");
 ?>
