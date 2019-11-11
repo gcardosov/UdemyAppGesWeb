@@ -193,7 +193,7 @@ class Datos extends Conexion
 
 
 
-		//CRUD para las categorias
+		////////////////////CRUD para las categorias
 
 
 		public function createCategoriaModel($tabla){
@@ -318,8 +318,191 @@ class Datos extends Conexion
 			}
 		
 		}
+
+
+		#VENTAS
+		//------------------------------------
+		public function createVentasModel($tabla){
+
+			$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla (usuario, producto, imagen, costo, fecha) VALUES (:usuario, :producto, :imagen, :costo, :fecha)");
+		//variables de apoyo para las pruebas
+		$usuario = "10"; //id del usuario NO NOMBRE 
+		$producto = "Consola Swhict";
+		$imagen = "imagen.jpg";  //ruta de la imagen
+		$costo = "10000";
+		$fecha = "2018-05-19 00:22:01"; //RESPECTAR EL FORMATO DE LAS FECHAS EN BASE DE DATOS 
+
+		
+		$stmt->bindParam(":usuario", $usuario,PDO::PARAM_INT);
+		$stmt->bindParam(":producto", $producto,PDO::PARAM_STR);
+		$stmt->bindParam(":imagen", $imagen,PDO::PARAM_STR);
+		$stmt->bindParam(":costo", $costo,PDO::PARAM_INT);
+		$stmt->bindParam(":fecha", $fecha,PDO::PARAM_STR);
+		
+			if($stmt->execute()){
+				echo "venta realizada";
+			}else{
+				echo "no se puede realizar la venta";
+			}
+
+		}
+
+
+		public function readVentasModel($tabla){
+			//realizamos el cambio con el inner join para vizualizar los usuario y no los ids
+			$stmt = Conexion::conectar()->prepare("SELECT V.id, U.usuario, V.producto, V.imagen, V.costo, V.fecha FROM $tabla V INNER JOIN usuarios U ON V.usuario = U.id ORDER BY V.fecha");
+		
+		//vamos a llamar al metodo execute para ver si la sentencia se ejecuto correctamente 
+		$stmt->execute();
+
+		//llamamos al metodo bindColumn para llamar a los atributos de la tabla y se hace para cada uno de los campos
+		//para leer tenemos que guardar en variables digamos auxiliares
+		$stmt->bindColumn("usuario",$usuario);
+		$stmt->bindColumn("producto",$producto);
+		$stmt->bindColumn("imagen",$imagen);
+		$stmt->bindColumn("costo",$costo);
+		$stmt->bindColumn("fecha",$fecha);
+
+
+		//es una array para guardar los atributos en cada una de las posiciones
+		$ventas = array();
+		//bound es un patrametro de PDO
+
+			//probamos el funcionamiento 
+			//creamos una talba 
+
+			//Primer echo 
+			echo '
+			<table>
+			<tr>
+			<td><strong>usuario</strong></td>
+			<td><strong>producto</strong></td>
+			<td><strong>imagen</strong></td>
+			<td><strong>costo</strong></td>
+			<td><strong>fecha</strong></td>
+			 ';
+
+
+			 //Nuestro while es el encargado de mostrar los campos de los usuarios
+
+		while($fila = $stmt->fetch(PDO::FETCH_BOUND)){
+
+			$venta = array();
+			//le vamos pasando los atributos en codigficacion UTF8 por si tenemops algun caracter que no se encuentre en ingles como la ñ
+			//cada atributo es una posicion en el array user
+			$venta["usuario"] = utf8_decode($usuario);
+			$venta["producto"] = utf8_decode($producto);
+			$venta["imagen"] = utf8_decode($imagen);
+			$venta["costo"] = utf8_decode($costo);
+			$venta["fecha"] = utf8_decode($fecha);
+
+			//Para enviar las informacion 
+			//guardamos el array users 
+			//y acceder a ellos con estos arrays
+
+			array_push($ventas, $venta);
+
+			//Segundo echo 
+			echo '
+			<tr>
+			<td>'.$venta['usuario'].'</td>	
+			<td>'.$venta['producto'].'</td>	
+			<td>'.$venta['imagen'].'</td>	
+			<td>'.$venta['costo'].'</td>	
+			<td>'.$venta['fecha'].'</td>	
+			';
+
+		}
+
+
+			echo '</table>';
+
+					//retornamos nuestro array principal usuarios
+			return $ventas;
+
+			
+		}
+
+
+		public function readVentasEspecificas($usuario, $tabla){
+			//este lee solo las ventas de un usuario
+
+
+			$stmt = Conexion::conectar()->prepare("SELECT V.id, U.usuario, V.producto, V.imagen, V.costo, V.fecha FROM $tabla V INNER JOIN usuarios U ON V.usuario = U.id WHERE U.id = $usuario ORDER BY V.fecha");
+		
+		//vamos a llamar al metodo execute para ver si la sentencia se ejecuto correctamente 
+		$stmt->execute();
+
+		//llamamos al metodo bindColumn para llamar a los atributos de la tabla y se hace para cada uno de los campos
+		//para leer tenemos que guardar en variables digamos auxiliares
+		$stmt->bindColumn("usuario",$usuario);
+		$stmt->bindColumn("producto",$producto);
+		$stmt->bindColumn("imagen",$imagen);
+		$stmt->bindColumn("costo",$costo);
+		$stmt->bindColumn("fecha",$fecha);
+
+
+		//es una array para guardar los atributos en cada una de las posiciones
+		$ventas = array();
+		//bound es un patrametro de PDO
+
+			//probamos el funcionamiento 
+			//creamos una talba 
+
+			//Primer echo 
+			echo '
+			<table>
+			<tr>
+			<td><strong>usuario</strong></td>
+			<td><strong>producto</strong></td>
+			<td><strong>imagen</strong></td>
+			<td><strong>costo</strong></td>
+			<td><strong>fecha</strong></td>
+			 ';
+
+
+			 //Nuestro while es el encargado de mostrar los campos de los usuarios
+
+		while($fila = $stmt->fetch(PDO::FETCH_BOUND)){
+
+			$venta = array();
+			//le vamos pasando los atributos en codigficacion UTF8 por si tenemops algun caracter que no se encuentre en ingles como la ñ
+			//cada atributo es una posicion en el array user
+			$venta["usuario"] = utf8_decode($usuario);
+			$venta["producto"] = utf8_decode($producto);
+			$venta["imagen"] = utf8_decode($imagen);
+			$venta["costo"] = utf8_decode($costo);
+			$venta["fecha"] = utf8_decode($fecha);
+
+			//Para enviar las informacion 
+			//guardamos el array users 
+			//y acceder a ellos con estos arrays
+
+			array_push($ventas, $venta);
+
+			//Segundo echo 
+			echo '
+			<tr>
+			<td>'.$venta['usuario'].'</td>	
+			<td>'.$venta['producto'].'</td>	
+			<td>'.$venta['imagen'].'</td>	
+			<td>'.$venta['costo'].'</td>	
+			<td>'.$venta['fecha'].'</td>	
+			';
+
+		}
+
+
+			echo '</table>';
+
+					//retornamos nuestro array principal usuarios
+			return $ventas;
+
+			
+		}
+
 	
-	}
+	} //cierre principal 
 
 
 
@@ -330,5 +513,5 @@ $obj = new Datos();
 //pasamos el parametro de la tabla usuario para la funcion crear usuario que gracias al prepare nos deja insertar el codigo sql 
 //cuanto estanciones nuestro objeto y le pasamos cada funcion para comprobar su funcionamiento 
 
-$obj->deleteCategoriaModel(17, "categorias");
+$obj->readVentasEspecificas(2, "ventas");
 ?>
