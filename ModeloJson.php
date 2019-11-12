@@ -115,22 +115,23 @@ class Datos extends Conexion
 	}
 
 
-	public function loginUsuariosModel($tabla){
+	public function loginUsuariosModel($datosModel, $tabla){
 
 
 		//en la setencia sql solo traemos al usuario selecionado
 		$stmt = Conexion::conectar()->prepare ("SELECT id, usuario, password, role, mail FROM  $tabla WHERE mail = :mail AND password = :password"); 
 
 		//probamos con las variables auxiliares
-		$mail = "aritza@cursos.com";
-		$password = "1234";
+		//comentamos la variables por el video 17 de la seccion 3
+		//$mail = "aritza@cursos.com";
+		//$password = "1234";
 
 
 
 
 		//llamamos al objeto bindParam y le pasamos el correo y el password como en el create
-		$stmt->bindParam(":mail", $mail);
-		$stmt->bindParam(":password", $password);
+		$stmt->bindParam(":mail", $datosModel["mail"]);
+		$stmt->bindParam(":password", $datosModel["password"]);
 
 		//parachecar que todo salga bien 
 		$stmt->execute();

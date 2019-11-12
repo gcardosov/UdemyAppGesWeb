@@ -25,11 +25,41 @@ class ControllerJson
 
 	}
 
+
+		public function readUsuarioController()
+	{
+
+		$respuesta = Datos::readUsuariosModel("usuarios");
+		return $respuesta;
+		
+	}
+
+
+
+
+	public function loginUsuarioController($mail, $password)
+	{
+		$datosController = array('mail' => $mail,
+								 'password' => $password
+
+								);
+
+		$respuesta = Datos::loginUsuariosModel($datosController, "usuarios");
+		return $respuesta;
+
+	}
+
+
+
+
+
+
+
 } //cierre principal
 
 $obj = new ControllerJson();
 //creamos ahora los objetos desde el controlador no desde el modelo
-$obj->createUsuarioController("axel", "9878", "cliente", "axel@curso.com");
+$obj->readUsuarioController();
 
 
 ?>
