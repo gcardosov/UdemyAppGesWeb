@@ -9,7 +9,7 @@ class Datos extends Conexion
 //nuestra nueva clase hereda de la clase de nuestro otro archivo
 {
 	
-	public function createUsuarioModel($tabla){
+	public function createUsuarioModel($datosModel,$tabla){
 		//le pasamos el parametro que sera tabla 
 		//
 		//prepare sirve para escribir sentencias SQL
@@ -17,20 +17,26 @@ class Datos extends Conexion
 		
 		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla (usuario, password, role, mail) VALUES (:usuario, :password, :role, :mail)");
 		//variables de apoyo
-		$usuario = "Gerardo";
+		////lo comentamos debido en la seccion 3 de API Rest Controladores
+		////en la funcion createUsuarioController del ControllerJson porque ya vamos a manipular el comportamiento y estas solo eran para validar que funcionara correctamente esta funcion 
+		/*$usuario = "Gerardo";
 		$password = "4321";
 		$role = "Administrador";
 		$mail = "gcardoso@gmail.com";
+		*/
+		//agreagamos el datosModel y su pocision con los parentesis 
 		
-		$stmt->bindParam(":usuario", $usuario,PDO::PARAM_STR);
-		$stmt->bindParam(":password", $password,PDO::PARAM_STR);
-		$stmt->bindParam(":role", $role,PDO::PARAM_STR);
-		$stmt->bindParam(":mail", $mail,PDO::PARAM_STR);
+		$stmt->bindParam(":usuario", $datosModel["usuario"], PDO::PARAM_STR);
+		$stmt->bindParam(":password", $datosModel["password"], PDO::PARAM_STR);
+		$stmt->bindParam(":role", $datosModel["role"], PDO::PARAM_STR);
+		$stmt->bindParam(":mail", $datosModel["mail"], PDO::PARAM_STR);
 		
 		if($stmt->execute()){
 				echo "registro exitoso";
+				return true;
 		}else{
 				echo "no se puede hacer el registro";
+				return false;
 		}
 	}
 
@@ -596,11 +602,7 @@ class Datos extends Conexion
 				echo "El producto no pudo ser eliminado";
 			}
 
-
-
 		}
-
-
 	
 	} //cierre principal 
 
@@ -609,9 +611,10 @@ class Datos extends Conexion
 
 
 //mandamos a llamar un nuevo objeto de la clase Datos que hereda de conexion 
-$obj = new Datos();
+//$obj = new Datos();
+//objeto de tipo datos para porbar cada una de las funciones 
 //pasamos el parametro de la tabla usuario para la funcion crear usuario que gracias al prepare nos deja insertar el codigo sql 
 //cuanto estanciones nuestro objeto y le pasamos cada funcion para comprobar su funcionamiento 
-
-$obj->deleteProductosModel(22, "productos");
+//$obj->deleteProductosModel(22, "productos");
+//lo comentamos debido en la seccion 3 de API Rest Controladores
 ?>
