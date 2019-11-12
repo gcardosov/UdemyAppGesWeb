@@ -501,6 +501,106 @@ class Datos extends Conexion
 			
 		}
 
+
+		#PRODUCTOS
+		//------------------------------------------
+
+		public function readProductosModel($tabla)
+		{
+			$stmt = Conexion::conectar()->prepare(
+			"SELECT id, titulo, descripcion, contenido ,imagen, precio, calificacion, categoria FROM $tabla");
+
+			$stmt->execute();
+			
+			$stmt->bindColumn("id", $id);
+			$stmt->bindColumn("titulo", $titulo);
+			$stmt->bindColumn("descripcion", $descripcion);
+			$stmt->bindColumn("contenido", $contenido);
+			$stmt->bindColumn("imagen", $imagen);
+			$stmt->bindColumn("precio", $precio);
+			$stmt->bindColumn("calificacion", $calificacion);
+			$stmt->bindColumn("categoria", $categoria);
+
+			$productos = array();
+
+			//Primer echo 
+			echo '
+			<table>
+			<tr>
+			<td><strong>id</strong></td>
+			<td><strong>titulo</strong></td>
+			<td><strong>descripcion</strong></td>
+			<td><strong>contenido</strong></td>
+			<td><strong>imagen</strong></td>
+			<td><strong>precio</strong></td>
+			<td><strong>calificacion</strong></td>
+			<td><strong>categoria</strong></td>
+			 ';
+
+
+
+
+
+			while($fila = $stmt->fetch(PDO::FETCH_BOUND)){
+				$pro = array();
+				$pro['id'] = utf8_decode($id);
+				$pro['titulo'] = utf8_decode($titulo);
+				$pro['descripcion'] = utf8_decode($descripcion);
+				$pro['contenido'] = utf8_decode($contenido);
+				$pro['imagen'] = utf8_decode($imagen);
+				$pro['precio'] = utf8_decode($precio);
+				$pro['calificacion'] = utf8_decode($calificacion);
+				$pro['categoria'] = utf8_decode($categoria);
+
+				//permite guardar la lista de arrays en un array padre
+				array_push($productos, $pro);
+
+
+
+				//Segundo echo 
+				//Muestra cada vez que el while haga su recorrido 
+				echo '
+				<tr>
+				<td>'.$pro['id'].'</td>	
+				<td>'.$pro['titulo'].'</td>	
+				<td>'.$pro['descripcion'].'</td>	
+				<td>'.$pro['contenido'].'</td>	
+				<td>'.$pro['imagen'].'</td>	
+				<td>'.$pro['precio'].'</td>	
+				<td>'.$pro['calificacion'].'</td>	
+				<td>'.$pro['categoria'].'</td>	
+
+			';
+
+			}
+
+			echo '</table>';
+
+
+			return $productos;
+
+		}
+
+
+
+
+		public function deleteProductosModel($id, $tabla)
+		{
+
+			$stmt = Conexion::conectar()->prepare("DELETE FROM $tabla WHERE id = :id");
+			$stmt->bindParam(":id", $id, PDO::PARAM_INT);
+			//	$stmt->bindParam(":usuario", $usuario,PDO::PARAM_INT);
+			if($stmt->execute()){
+				echo "Producto elimado";
+			}else{
+				echo "El producto no pudo ser eliminado";
+			}
+
+
+
+		}
+
+
 	
 	} //cierre principal 
 
@@ -513,5 +613,5 @@ $obj = new Datos();
 //pasamos el parametro de la tabla usuario para la funcion crear usuario que gracias al prepare nos deja insertar el codigo sql 
 //cuanto estanciones nuestro objeto y le pasamos cada funcion para comprobar su funcionamiento 
 
-$obj->readVentasEspecificas(2, "ventas");
+$obj->deleteProductosModel(22, "productos");
 ?>
