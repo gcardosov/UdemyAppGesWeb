@@ -203,20 +203,23 @@ class Datos extends Conexion
 		////////////////////CRUD para las categorias
 
 
-		public function createCategoriaModel($tabla){
+		public function createCategoriaModel($titulo, $tabla){
 
 			$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla (titulo) VALUES (:titulo)");
 			//variables de apoyo
-			$titulo = "PERFUMES";
+			//comentamos las variables de apoyo en la clase 18 porque vamos a hacerlo ya desde el controller  
+			//$titulo = "PERFUMES";
 
-		
+			
 			$stmt->bindParam(":titulo", $titulo,PDO::PARAM_STR);
 
 		
 			if($stmt->execute()){
 				echo "registro exitoso";
+				return true;
 			}else{
 				echo "no se puede hacer el registro";
+				return false;
 			}
 
 
@@ -290,21 +293,26 @@ class Datos extends Conexion
 		}
 
 
-		public function updateCategoriaModel($tabla){
+		public function updateCategoriaModel($datosModel, $tabla){
 
 			$stmt = Conexion::conectar()->prepare("UPDATE $tabla  SET titulo = :titulo WHERE id = :id");
 			//variables de apoyo
-			$id = 17;
-			$titulo = "FUNDAS DE TELEFONO";
+			//las comentamos porque haremos las cosas desde el controler
+			//en la clase 18 lo hicimos
+			//$id = 17;
+			//$titulo = "FUNDAS DE TELEFONO";
 
-			$stmt->bindParam(":id", $id, PDO::PARAM_INT);
-			$stmt->bindParam(":titulo", $titulo, PDO::PARAM_STR);
+			
+			$stmt->bindParam(":titulo", $datosModel["titulo"], PDO::PARAM_STR);
+			$stmt->bindParam(":id", $datosModel["id"], PDO::PARAM_INT);
 
 		
 			if($stmt->execute()){
 				echo "actualización exitosa";
+				return true;
 			}else{
 				echo "no se puede hacer la actualización registro";
+				return false;
 			}
 
 		}
@@ -318,8 +326,10 @@ class Datos extends Conexion
 
 			if($stmt->execute()){
 				echo"Categoria eliminada exitosamente";
+				return true;
 			}else{
 				echo "La categoria no pudo ser eliminada";
+				return false;
 
 		
 			}

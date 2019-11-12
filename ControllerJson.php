@@ -52,6 +52,44 @@ class ControllerJson
 
 
 
+	#CATEGORIAS
+	///////////////////CRUD categorias Controller
+
+	public function createCategoriaController($titulo)
+	{
+		//Mandamos a llamar la funcion creacion categoria  de la clase datos para que haga conexion con nuestro modelo directamente nos exije la tabla 
+		$respuesta = Datos::createCategoriaModel($titulo, "categorias");
+		//regresamos lo que guardo con el modelo
+		return $respuesta;
+	}
+
+	public function readCategoriaController()
+	{
+		//Mandamos a llamar la funcion creacion categoria  de la clase datos para que haga conexion con nuestro modelo directamente nos exije la tabla 
+		$respuesta = Datos::readCategoriasModel("categorias");
+		//regresamos lo que guardo con el modelo
+		return $respuesta;
+
+	}
+
+
+	public function updateCategoriaController($id, $titulo)
+	{
+		$datosController = array("id" => $id,
+								 "titulo" => $titulo);
+
+		$respuesta = Datos::updateCategoriaModel($datosController, "categorias");
+		return $respuesta;
+
+	}
+
+
+	public function deleteCateriaController($id)
+	{
+		$respuesta = Datos::deleteCategoriaModel($id, "categorias");
+		return $respuesta;
+
+	}
 
 
 
@@ -59,7 +97,8 @@ class ControllerJson
 
 $obj = new ControllerJson();
 //creamos ahora los objetos desde el controlador no desde el modelo
-$obj->readUsuarioController();
+//probamos las nuevas funciones desde el controller
+$obj->deleteCateriaController(17);
 
 
 ?>
