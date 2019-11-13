@@ -92,13 +92,46 @@ class ControllerJson
 	}
 
 
+#VENTAS
+	////////CONTROL DE VENTAS
+
+	public function createVentaController($usuario, $producto, $imagen, $costo, $fecha)
+	{
+		//posiciones unicas para guardar lo parametros de la funcion 
+		$datosController = array('usuario' => $usuario, 
+								 'producto' => $producto,
+								 'imagen' => $imagen,	
+								 'costo' => $costo,
+								 'fecha' => $fecha				
+								 );
+
+		$respuesta = Datos::createVentasModel($datosController,"ventas");
+		return $respuesta;
+
+	}
+
+
+	public function readVentasController()
+	{
+		$respuesta = Datos::readVentasModel("ventas");
+		return $respuesta;
+
+	}
+
+
+	public function readVentasEspecificasController($usuario)
+	{
+		$respuesta = Datos::readVentasEspecificasModel($usuario, "ventas");
+		return $respuesta;
+
+	}
 
 } //cierre principal
 
 $obj = new ControllerJson();
 //creamos ahora los objetos desde el controlador no desde el modelo
 //probamos las nuevas funciones desde el controller
-$obj->deleteCateriaController(17);
+$obj->readVentasEspecificasController(2);
 
 
 ?>

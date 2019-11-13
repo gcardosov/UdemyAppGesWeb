@@ -339,27 +339,31 @@ class Datos extends Conexion
 
 		#VENTAS
 		//------------------------------------
-		public function createVentasModel($tabla){
+		public function createVentasModel($datosModel, $tabla){
 
 			$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla (usuario, producto, imagen, costo, fecha) VALUES (:usuario, :producto, :imagen, :costo, :fecha)");
 		//variables de apoyo para las pruebas
-		$usuario = "10"; //id del usuario NO NOMBRE 
+		//comentamos las variables para probar en la clase 19
+		//porque ya implementamos en el controller
+		/*$usuario = "10"; //id del usuario NO NOMBRE 
 		$producto = "Consola Swhict";
 		$imagen = "imagen.jpg";  //ruta de la imagen
 		$costo = "10000";
 		$fecha = "2018-05-19 00:22:01"; //RESPECTAR EL FORMATO DE LAS FECHAS EN BASE DE DATOS 
+		*/
 
-		
-		$stmt->bindParam(":usuario", $usuario,PDO::PARAM_INT);
-		$stmt->bindParam(":producto", $producto,PDO::PARAM_STR);
-		$stmt->bindParam(":imagen", $imagen,PDO::PARAM_STR);
-		$stmt->bindParam(":costo", $costo,PDO::PARAM_INT);
-		$stmt->bindParam(":fecha", $fecha,PDO::PARAM_STR);
+		$stmt->bindParam(":usuario", $datosModel["usuario"],PDO::PARAM_INT);
+		$stmt->bindParam(":producto", $datosModel["producto"],PDO::PARAM_STR);
+		$stmt->bindParam(":imagen", $datosModel["imagen"],PDO::PARAM_STR);
+		$stmt->bindParam(":costo", $datosModel["costo"],PDO::PARAM_INT);
+		$stmt->bindParam(":fecha", $datosModel["fecha"],PDO::PARAM_STR);
 		
 			if($stmt->execute()){
 				echo "venta realizada";
+				return true;
 			}else{
 				echo "no se puede realizar la venta";
+				return false;
 			}
 
 		}
@@ -441,7 +445,7 @@ class Datos extends Conexion
 		}
 
 
-		public function readVentasEspecificas($usuario, $tabla){
+		public function readVentasEspecificasModel($usuario, $tabla){
 			//este lee solo las ventas de un usuario
 
 
