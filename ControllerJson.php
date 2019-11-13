@@ -53,7 +53,7 @@ class ControllerJson
 
 
 	#CATEGORIAS
-	///////////////////CRUD categorias Controller
+	//-------------------CRUD categorias Controller
 
 	public function createCategoriaController($titulo)
 	{
@@ -93,7 +93,7 @@ class ControllerJson
 
 
 #VENTAS
-	////////CONTROL DE VENTAS
+	///--------------CONTROL DE VENTAS
 
 	public function createVentaController($usuario, $producto, $imagen, $costo, $fecha)
 	{
@@ -126,12 +126,35 @@ class ControllerJson
 
 	}
 
+
+
+	#PRODUCTOS
+	///--------------------------
+
+	public function readProductosController()
+	{
+		$respuesta = Datos::readProductosModel("productos");
+		return $respuesta;
+
+	}
+
+
+	public function deleteProductosController($id)
+	{
+		$respuesta = Datos::deleteProductosModel($id, "productos");
+		return $respuesta;
+
+
+	}
+
+
+
 } //cierre principal
 
 $obj = new ControllerJson();
 //creamos ahora los objetos desde el controlador no desde el modelo
 //probamos las nuevas funciones desde el controller
-$obj->readVentasEspecificasController(2);
+$obj->deleteProductosController(19);
 
 
 ?>

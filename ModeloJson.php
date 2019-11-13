@@ -613,8 +613,10 @@ class Datos extends Conexion
 			//	$stmt->bindParam(":usuario", $usuario,PDO::PARAM_INT);
 			if($stmt->execute()){
 				echo "Producto elimado";
+				return true;
 			}else{
 				echo "El producto no pudo ser eliminado";
+				return false;
 			}
 
 		}
