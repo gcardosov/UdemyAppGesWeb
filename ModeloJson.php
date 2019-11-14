@@ -32,10 +32,11 @@ class Datos extends Conexion
 		$stmt->bindParam(":mail", $datosModel["mail"], PDO::PARAM_STR);
 		
 		if($stmt->execute()){
-				echo "registro exitoso";
+				//Comentamos esto en la leccion 24
+				//echo "registro exitoso";
 				return true;
 		}else{
-				echo "no se puede hacer el registro";
+				//echo "no se puede hacer el registro";
 				return false;
 		}
 	}
@@ -63,8 +64,9 @@ class Datos extends Conexion
 			//probamos el funcionamiento 
 			//creamos una talba 
 
+			//Comentamos esto en la leccion 24
 			//Primer echo 
-			echo '
+			/*echo '
 			<table>
 			<tr>
 			<td><strong>id</strong></td>
@@ -72,7 +74,7 @@ class Datos extends Conexion
 			<td><strong>password</strong></td>
 			<td><strong>role</strong></td>
 			<td><strong>mail</strong></td>
-			 ';
+			 ';*/
 
 
 			 //Nuestro while es el encargado de mostrar los campos de los usuarios
@@ -95,6 +97,8 @@ class Datos extends Conexion
 			array_push($usuarios, $user);
 
 			//Segundo echo 
+			//Comentamos esto en la leccion 24
+			/*
 			echo '
 			<tr>
 			<td>'.$user['id'].'</td>	
@@ -103,11 +107,12 @@ class Datos extends Conexion
 			<td>'.$user['role'].'</td>	
 			<td>'.$user['mail'].'</td>	
 			';
+			*/
 
 		}
 
 
-			echo '</table>';
+			//echo '</table>';
 
 					//retornamos nuestro array principal usuarios
 			return $usuarios;
@@ -145,7 +150,8 @@ class Datos extends Conexion
 
 		//Primer echo 
 		//verificar
-		echo'
+		//Comentamos esto en la leccion 24
+		/*echo'
 		<table>
 		<tr>
 		<td><strong>id</strong></td>
@@ -153,7 +159,7 @@ class Datos extends Conexion
 		<td><strong>password</strong></td>
 		<td><strong>role</strong></td>
 		<td><strong>mail</strong></td>
-		';
+		';*/
 			
 
 
@@ -176,6 +182,8 @@ class Datos extends Conexion
 
 
 			//Segundo echo 
+			//Comentamos esto en la leccion 24
+			/*
 			echo '
 			<tr>
 			<td>'.$user['id'].'</td>	
@@ -184,6 +192,7 @@ class Datos extends Conexion
 			<td>'.$user['role'].'</td>	
 			<td>'.$user['mail'].'</td>	
 			';
+			*/
 
 		}
 
@@ -215,10 +224,12 @@ class Datos extends Conexion
 
 		
 			if($stmt->execute()){
-				echo "registro exitoso";
+				//Comentamos esto en la leccion 24
+				//echo "registro exitoso";
 				return true;
 			}else{
-				echo "no se puede hacer el registro";
+				//Comentamos esto en la leccion 24
+				//echo "no se puede hacer el registro";
 				return false;
 			}
 
@@ -273,18 +284,21 @@ class Datos extends Conexion
 			array_push($categorias, $cat);
 
 			//Segundo echo 
+			//Comentamos esto en la leccion 24
+			/*
 			echo '
 			<tr>
 			<td>'.$cat['id'].'</td>	
 			<td>'.$cat['titulo'].'</td>	
 			';
+			*/
 
 		}
 
 
-			echo '</table>';
-
-					//retornamos nuestro array principal usuarios
+			//Comentamos esto en la leccion 24
+			//echo '</table>';
+			//retornamos nuestro array principal usuarios
 			return $categorias;
 
 
@@ -325,10 +339,12 @@ class Datos extends Conexion
 
 
 			if($stmt->execute()){
-				echo"Categoria eliminada exitosamente";
+				//Comentamos esto en la leccion 24
+				//echo"Categoria eliminada exitosamente";
 				return true;
 			}else{
-				echo "La categoria no pudo ser eliminada";
+				//Comentamos esto en la leccion 24
+				//echo "La categoria no pudo ser eliminada";
 				return false;
 
 		
@@ -359,10 +375,12 @@ class Datos extends Conexion
 		$stmt->bindParam(":fecha", $datosModel["fecha"],PDO::PARAM_STR);
 		
 			if($stmt->execute()){
-				echo "venta realizada";
+				//Comentamos esto en la leccion 24
+				//echo "venta realizada";
 				return true;
 			}else{
-				echo "no se puede realizar la venta";
+				//Comentamos esto en la leccion 24
+				//echo "no se puede realizar la venta";
 				return false;
 			}
 
@@ -393,6 +411,8 @@ class Datos extends Conexion
 			//creamos una talba 
 
 			//Primer echo 
+			//Comentamos esto en la leccion 24
+			/*
 			echo '
 			<table>
 			<tr>
@@ -402,6 +422,7 @@ class Datos extends Conexion
 			<td><strong>costo</strong></td>
 			<td><strong>fecha</strong></td>
 			 ';
+			 */
 
 
 			 //Nuestro while es el encargado de mostrar los campos de los usuarios
@@ -424,6 +445,8 @@ class Datos extends Conexion
 			array_push($ventas, $venta);
 
 			//Segundo echo 
+			//Comentamos esto en la leccion 24
+			/*
 			echo '
 			<tr>
 			<td>'.$venta['usuario'].'</td>	
@@ -432,11 +455,12 @@ class Datos extends Conexion
 			<td>'.$venta['costo'].'</td>	
 			<td>'.$venta['fecha'].'</td>	
 			';
+			*/
 
 		}
 
 
-			echo '</table>';
+			//echo '</table>';
 
 					//retornamos nuestro array principal usuarios
 			return $ventas;
@@ -471,6 +495,8 @@ class Datos extends Conexion
 			//creamos una talba 
 
 			//Primer echo 
+			//Comentamos esto en la leccion 24
+			/*
 			echo '
 			<table>
 			<tr>
@@ -480,6 +506,7 @@ class Datos extends Conexion
 			<td><strong>costo</strong></td>
 			<td><strong>fecha</strong></td>
 			 ';
+			 */
 
 
 			 //Nuestro while es el encargado de mostrar los campos de los usuarios
@@ -502,6 +529,8 @@ class Datos extends Conexion
 			array_push($ventas, $venta);
 
 			//Segundo echo 
+			//Comentamos esto en la leccion 24
+			/*
 			echo '
 			<tr>
 			<td>'.$venta['usuario'].'</td>	
@@ -510,11 +539,12 @@ class Datos extends Conexion
 			<td>'.$venta['costo'].'</td>	
 			<td>'.$venta['fecha'].'</td>	
 			';
+			*/
 
 		}
 
-
-			echo '</table>';
+			//Comentamos esto en la leccion 24
+			//echo '</table>';
 
 					//retornamos nuestro array principal usuarios
 			return $ventas;
@@ -545,6 +575,8 @@ class Datos extends Conexion
 			$productos = array();
 
 			//Primer echo 
+			//Comentamos esto en la leccion 24
+			/*
 			echo '
 			<table>
 			<tr>
@@ -557,6 +589,7 @@ class Datos extends Conexion
 			<td><strong>calificacion</strong></td>
 			<td><strong>categoria</strong></td>
 			 ';
+			 */
 
 
 
@@ -580,6 +613,8 @@ class Datos extends Conexion
 
 				//Segundo echo 
 				//Muestra cada vez que el while haga su recorrido 
+				//Comentamos esto en la leccion 24
+				/*
 				echo '
 				<tr>
 				<td>'.$pro['id'].'</td>	
@@ -592,12 +627,12 @@ class Datos extends Conexion
 				<td>'.$pro['categoria'].'</td>	
 
 			';
+			*/
 
 			}
 
-			echo '</table>';
-
-
+			//Comentamos esto en la leccion 24
+			//echo '</table>';
 			return $productos;
 
 		}
@@ -612,10 +647,12 @@ class Datos extends Conexion
 			$stmt->bindParam(":id", $id, PDO::PARAM_INT);
 			//	$stmt->bindParam(":usuario", $usuario,PDO::PARAM_INT);
 			if($stmt->execute()){
-				echo "Producto elimado";
+				//Comentamos esto en la leccion 24
+				//echo "Producto elimado";
 				return true;
 			}else{
-				echo "El producto no pudo ser eliminado";
+				//Comentamos esto en la leccion 24
+				//echo "El producto no pudo ser eliminado";
 				return false;
 			}
 

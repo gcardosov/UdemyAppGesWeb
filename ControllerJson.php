@@ -135,7 +135,6 @@ class ControllerJson
 	{
 		$respuesta = Datos::readProductosModel("productos");
 		return $respuesta;
-
 	}
 
 
@@ -143,18 +142,21 @@ class ControllerJson
 	{
 		$respuesta = Datos::deleteProductosModel($id, "productos");
 		return $respuesta;
-
-
 	}
-
 
 
 } //cierre principal
 
+
+/*
 $obj = new ControllerJson();
 //creamos ahora los objetos desde el controlador no desde el modelo
 //probamos las nuevas funciones desde el controller
-$obj->deleteProductosController(19);
+//Comentamos esto en la leccion 24
+$obj->readVentasController();
+echo '------------------------------------------';
+$obj->readVentasEspecificasController(2);
+*/
 
 
 ?>
