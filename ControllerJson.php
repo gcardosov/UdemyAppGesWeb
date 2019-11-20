@@ -26,7 +26,7 @@ class ControllerJson
 	}
 
 
-		public function readUsuarioController()
+		public function readUsuariosController()
 	{
 
 		$respuesta = Datos::readUsuariosModel("usuarios");

@@ -64,6 +64,9 @@ if(isset($_GET['apiCall'])){
 				$response ['error']= false;
 				//mensaje que se ejecuto correctamente 
 				$response ['message'] = 'Usuario agregado correctamente';
+				//para actualizar en tiempo real la lista de usuarios cuando agregamos uno 
+				$response['contenido'] = $db->readUsuariosController();
+
 			}else{
 				$response ['error']= true;
 				//mensaje que se ejecuto correctamente 
@@ -72,6 +75,13 @@ if(isset($_GET['apiCall'])){
 			}
 
 			break;
+
+			case 'readUsuarios':
+				$db = new ControllerJson();
+				$response['error'] = false;
+				$response['message'] = 'Solicitud completada correctamente';
+				$response['contenido'] = $db->readUsuariosController();
+ 				break;
 		
 	}
 
