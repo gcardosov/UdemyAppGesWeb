@@ -11,7 +11,7 @@ function isTheseParameterAvailable($params)
 	//suponiendo que todos los parametros estan disponibles
 	//no ocurre niungun error
 	$available = true;
-	$$missingparams = "";
+	$missingparams = "";
 
 	foreach ($params as $param) {
 		if(!isset($_POST[$param]) || strlen($_POST[$param]) <= 0){
@@ -25,7 +25,7 @@ function isTheseParameterAvailable($params)
 	if(!$available){
 		$response = array();
 		$response['error'] = true;
-		$response['message'] = 'Paremetro' . substr($missingparams, 1, strlen($missingparams));
+		$response['message'] = 'Paremetro' . substr($missingparams, 1, strlen($missingparams)) .' vacio';
 		//error de visualizacion 
 		echo json_encode($response);
 		//detener la ejecucion adicional
@@ -43,7 +43,39 @@ $response = array();
 //que significa que un parametro get llamado se establece en la URL
 //y con estos parametros estamos concluyendo que es una llamda API
 
-if(isset($_GET['apicall'])){
+if(isset($_GET['apiCall'])){
+	//Aqui iran todos los llamados 
+	switch ($_GET['apiCall']) {
+		//Operacion createUsuario
+		case 'createUsuario':
+			//primero se verifican parametros 
+			//pasamos las posiciones vacias 
+			isTheseParameterAvailable(array('usuario', 'password', 'role', 'mail'));
+			//llamamos a la clase controladorJson
+			$db = new ControllerJson();
+			$result = $db->createUsuarioController($_POST['usuario'],
+												   $_POST['password'],
+												   $_POST['role'],
+												   $_POST['mail']
+												   );
+
+			if($result){
+				//esto significa que no hay ningun error
+				$response ['error']= false;
+				//mensaje que se ejecuto correctamente 
+				$response ['message'] = 'Usuario agregado correctamente';
+			}else{
+				$response ['error']= true;
+				//mensaje que se ejecuto correctamente 
+				$response ['message'] = 'Ocurrio un error intentar nuevamente';
+
+			}
+
+			break;
+		
+	}
+
+
 
 }else{
 	//si no es un API el que se esta invocando 
