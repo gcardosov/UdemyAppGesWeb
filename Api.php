@@ -82,6 +82,26 @@ if(isset($_GET['apiCall'])){
 				$response['message'] = 'Solicitud completada correctamente';
 				$response['contenido'] = $db->readUsuariosController();
  				break;
+
+
+ 			case 'loginUsuario';
+ 			isTheseParameterAvailable(array('mail','password'));
+ 			
+ 			$db = new ControllerJson();
+
+ 			$result = $db->loginUsuarioController($_POST['mail'], $_POST['password']);
+ 			if(!$result){
+ 				$response['error'] = true;
+ 				$response['message'] = 'Credenciales no validas';
+ 				
+ 			}else{
+ 				$response['error'] = false;
+ 				$response['message'] = 'Bienvenido';
+ 				$response['contenido'] = $result;
+ 			}
+
+
+ 			break;	
 		
 	}
 
