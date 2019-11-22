@@ -63,7 +63,7 @@ class ControllerJson
 		return $respuesta;
 	}
 
-	public function readCategoriaController()
+	public function readCategoriasController()
 	{
 		//Mandamos a llamar la funcion creacion categoria  de la clase datos para que haga conexion con nuestro modelo directamente nos exije la tabla 
 		$respuesta = Datos::readCategoriasModel("categorias");
@@ -73,14 +73,12 @@ class ControllerJson
 	}
 
 
-	public function updateCategoriaController($id, $titulo)
-	{
-		$datosController = array("id" => $id,
-								 "titulo" => $titulo);
+	public function updateCategoriaController($id, $titulo){
+
+		$datosController = array("id"=>$id, "titulo"=>$titulo);
 
 		$respuesta = Datos::updateCategoriaModel($datosController, "categorias");
 		return $respuesta;
-
 	}
 
 

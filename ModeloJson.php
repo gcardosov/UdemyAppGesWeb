@@ -258,12 +258,12 @@ class Datos extends Conexion
 			//creamos una talba 
 
 			//Primer echo 
-			echo '
+			/*echo '
 			<table>
 			<tr>
 			<td><strong>id</strong></td>
 			<td><strong>titulo</strong></td>
-			 ';
+			 ';*/
 
 
 			 //Nuestro while es el encargado de mostrar los campos de los usuarios
@@ -306,30 +306,27 @@ class Datos extends Conexion
 
 		}
 
+			
+	public function updateCategoriaModel($datosModel, $tabla){
+			$stmt = Conexion::conectar()->prepare("UPDATE $tabla set titulo = :titulo WHERE id = :id");
 
-		public function updateCategoriaModel($datosModel, $tabla){
-
-			$stmt = Conexion::conectar()->prepare("UPDATE $tabla  SET titulo = :titulo WHERE id = :id");
-			//variables de apoyo
+		    //variables de apoyo
 			//las comentamos porque haremos las cosas desde el controler
 			//en la clase 18 lo hicimos
 			//$id = 17;
 			//$titulo = "FUNDAS DE TELEFONO";
 
-			
 			$stmt->bindParam(":titulo", $datosModel["titulo"], PDO::PARAM_STR);
 			$stmt->bindParam(":id", $datosModel["id"], PDO::PARAM_INT);
 
-		
 			if($stmt->execute()){
-				echo "actualización exitosa";
 				return true;
 			}else{
-				echo "no se puede hacer la actualización registro";
 				return false;
 			}
-
 		}
+
+		
 
 
 		public function deleteCategoriaModel($id, $tabla){

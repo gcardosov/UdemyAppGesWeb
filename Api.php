@@ -6,7 +6,7 @@ require_once 'ControllerJson.php';
 //funcion que valida todos los parametros disponibles
 //pasaremos los parametros requeridos a esta funcion 
 
-function isTheseParameterAvailable($params)
+function isTheseParametersAvailable($params)
 {
 	//suponiendo que todos los parametros estan disponibles
 	//no ocurre niungun error
@@ -50,7 +50,7 @@ if(isset($_GET['apiCall'])){
 		case 'createUsuario':
 			//primero se verifican parametros 
 			//pasamos las posiciones vacias 
-			isTheseParameterAvailable(array('usuario', 'password', 'role', 'mail'));
+			isTheseParametersAvailable(array('usuario', 'password', 'role', 'mail'));
 			//llamamos a la clase controladorJson
 			$db = new ControllerJson();
 			$result = $db->createUsuarioController($_POST['usuario'],
@@ -85,7 +85,7 @@ if(isset($_GET['apiCall'])){
 
 
  			case 'loginUsuario';
- 			isTheseParameterAvailable(array('mail','password'));
+ 			isTheseParametersAvailable(array('mail','password'));
  			
  			$db = new ControllerJson();
 
@@ -99,9 +99,92 @@ if(isset($_GET['apiCall'])){
  				$response['message'] = 'Bienvenido';
  				$response['contenido'] = $result;
  			}
+ 			break;
 
 
- 			break;	
+ 			//CRUD Categorias 
+
+ 			case 'createCategoria':
+ 			//pasamos las posiciones vacias 
+			isTheseParametersAvailable(array('titulo'));
+			//llamamos a la clase controladorJson
+			$db = new ControllerJson();
+			$result = $db->createCategoriaController($_POST['titulo']
+												   );
+
+			if($result){
+				//esto significa que no hay ningun error
+				$response ['error']= false;
+				//mensaje que se ejecuto correctamente 
+				$response ['message'] = 'Categoria agregada correctamente';
+				//para actualizar en tiempo real la lista de usuarios cuando agregamos uno 
+				$response['contenido'] = $db->readCategoriasController();
+
+			}else{
+				$response ['error']= true;
+				//mensaje que se ejecuto correctamente 
+				$response ['message'] = 'Ocurrio un error intentar nuevamente';
+
+			}
+
+ 				break;
+
+ 			case 'readCategorias':
+
+ 				$db = new ControllerJson();
+				$response['error'] = false;
+				$response['contenido'] = $db->readCategoriasController();
+ 				
+ 				break;
+	
+
+ 			case 'updateCategorias':
+
+				isTheseParametersAvailable(array('id','titulo'));
+
+				$db = new ControllerJson();
+
+				$result = $db->updateCategoriaController($_POST['id'], $_POST['titulo']);
+
+				if($result){
+
+				//esto significa que no hay ningun error
+				$response['error'] = false;
+				//mensaje que se ejecuto correctamente
+				$response['message'] = 'categoria editada correctamente';
+
+				$response['contenido'] = $db->readCategoriasController();
+				}else{
+				$response['error'] = true;
+				$response['message'] = 'ocurrio un error, intenta nuevamente';
+				} 			
+
+
+ 				break;
+
+
+ 			case 'deleteCategoria':
+
+ 			if(isset($_GET['id']) && !empty($_GET['id'])){
+
+ 				$db = new ControllerJson();
+ 				if($db->deleteCateriaController($_GET['id'])){
+ 				$response['error'] = false;
+ 				$response['message'] = 'Categoria eliminada';
+ 				$response['contenido'] = $db->readCategoriasController();
+ 				}else{
+ 					$response['error'] = true;
+ 					$response['message'] = 'La categoria no fue eliminada';
+
+ 				}
+ 			}
+ 				
+ 				break; 				
+
+
+
+
+
 		
 	}
 
