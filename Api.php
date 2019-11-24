@@ -177,15 +177,31 @@ if(isset($_GET['apiCall'])){
  					$response['message'] = 'La categoria no fue eliminada';
 
  				}
+ 			
  			}
  				
- 				break; 				
+ 				break; 			
 
 
+ 			case 'createVenta':
+ 			
+ 			isTheseParametersAvailable(array('usuario', 'producto', 'imagen', 'costo', 'fecha'));
+
+ 			$db = new ControllerJson();
+ 			$result = $db->createVentaController($_POST['usuario'], $_POST['producto'], $_POST['imagen'], $_POST['costo'], $_POST['fecha']);
+
+ 			if($result){
+ 				$response['error'] = false;
+ 				$response['message'] = 'Venta realizada correctamente';
+ 				$response['contenido'] = $db -> readVentasController();
+ 			}else{
+ 				$response['error'] = true;
+ 				$response['message'] = 'Ha ocurrido un error con la venta, favor de intentarlo de nuevo';
+ 			}
 
 
+ 			break;		
 
-		
 	}
 
 
