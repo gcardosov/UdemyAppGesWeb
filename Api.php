@@ -227,10 +227,38 @@ if(isset($_GET['apiCall'])){
 
 			}
 
+			break;
 
+
+			case 'readProductos':
+
+ 				$db = new ControllerJson();
+				$response['error'] = false;
+				$response['contenido'] = $db->readProductosController();
 
 			break;
 
+
+
+			case 'deleteProducto':
+
+			 	if(isset($_GET['id']) && !empty($_GET['id'])){
+
+ 				$db = new ControllerJson();
+ 				if($db->deleteProductosController($_GET['id'])){
+ 				$response['error'] = false;
+ 				$response['message'] = 'Producto eliminado';
+ 				$response['contenido'] = $db->readProductosController();
+ 				}else{
+ 					$response['error'] = true;
+ 					$response['message'] = 'El producto no fue eliminado';
+
+ 				}
+ 			
+ 			}
+
+
+			break;
 	}
 
 
