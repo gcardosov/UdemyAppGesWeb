@@ -163,7 +163,7 @@ if(isset($_GET['apiCall'])){
  				break;
 
 
- 			case 'deleteCategoria':
+ 			case 'deleteCategorias':
 
  			if(isset($_GET['id']) && !empty($_GET['id'])){
 
@@ -201,6 +201,35 @@ if(isset($_GET['apiCall'])){
 
 
  			break;		
+
+
+ 			case 'readVentas':
+
+ 				$db = new ControllerJson();
+				$response['error'] = false;
+				$response['contenido'] = $db->readVentasController();
+
+			break;
+
+
+
+			case 'readVentasEspecificas':
+
+			if(isset($_GET['usuario']) && !empty($_GET['usuario'])){
+				$db = new ControllerJson();
+				$response['error'] = false;
+				$response['message'] = 'Solicitud completada correctamente';
+				$response['contenido'] = $db->readVentasEspecificasController($_GET['usuario']);
+
+			}else{
+				$response['error'] = true;
+				$response['message'] = 'La solicitud no pudo realizarce';
+
+			}
+
+
+
+			break;
 
 	}
 
